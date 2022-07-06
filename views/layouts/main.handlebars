@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{!-- cdn de bootstrap 4 --}}
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous"/>
+
+    {{!-- Se agrega el CDN de axios para poder trabajar con peticiones al servidor. --}}
+    {{!-- Tambien se puede instalar desde la consola de node. --}}
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js" 
+        integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+    </script>
+
+    {{!-- cdn de sweetalert 2 --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{!-- ruta para utilizar estilos.css --}}
+    <link rel="stylesheet" href="assets/css/estilos.css" />
+    <title>Skate Park</title>
+</head>
+<body>
+
+    {{!-- Se agrega el menu dentro de un parcial para que sea visible en todas las vistas del proyecto. --}}
+    <section>
+        {{> menu}}
+    </section>
+
+    <section class="mt-5">
+        {{{body}}}
+    </section>
+    
+
+    {{!-- cdn de los archivos js de bootstrap 4 para agregar las opciones del menu en tamaño movil. --}}
+    <script 
+        src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" 
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" 
+        crossorigin="anonymous">
+    </script>
+    
+</body>
+</html>

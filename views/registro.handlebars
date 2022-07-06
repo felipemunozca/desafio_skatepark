@@ -1,0 +1,89 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+    <h2>Registro</h2>
+    <hr class="w-50" />
+
+    <form id="form_registro">
+        <div class="form-group row w-50 m-auto">
+            <div class="form-group col-12 col-sm-6">
+                <label>Email</label>
+                <input class="form-control m-auto" name="email" required/>
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Nombre</label>
+                <input class="form-control m-auto" name="nombre" required/>
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Password</label>
+                <input type="password" class="form-control m-auto" name="password" id="pass1" required/>
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Repita la password</label>
+                <input type="password" class="form-control m-auto" id="pass2" required/>
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Años de experiencia</label>
+                <input type="number" class="form-control m-auto" name="anos_experiencia" required/>
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Especialidad</label>
+                <input class="form-control m-auto" name="especialidad" required/>
+            </div>
+            <div class="form-group col-12 col-sm-12">
+                <label>Foto de perfil</label>
+                <input type="file" name="foto" required/>
+            </div>
+        </div>
+        <button class="btn btn-info mb-3 mt-3">Registrarme</button>
+        <p><a href="/login"> Iniciar sesión</a></p>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById("form_registro");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        /* para poder comparar ambas contraseñas, lo primero sera obtener su valor utilizando el metodo map para 
+        recorrer los input dentro del formulario. */
+        /* Lo primero es crear un arreglo en donde se deben escribir los name de cada input que tenga uno, tambien
+        se puede dejar vacio. Y tampoco es necesario colocarlos todos. */
+        /* colocar 3 puntos delante del document representa un operador "spread" y sirve para convertir las posiciones
+        del arreglo en numeros para despues recorrer con map y obtener el valor de cada elemento. */
+        const [email, nombre, pass1, pass2] = [...document.querySelectorAll("form input")].map( (i) => i.value );
+        
+        /* Se crea una nueva constante, la cual obtendra toda la informacion de los input dentro del formulario. */
+        const formData = new FormData(form);
+
+        if (pass1 != pass2) {
+            Swal.fire(
+                'Las contraseñas deben ser iguales',
+                'Por favor vuelva a escribirlas',
+                'error'
+            )
+        } else {
+            axios.post("/registro", formData)
+                .then((respuesta) => {
+                    Swal.fire(
+                        'Registro creado', 
+                        'Se ha agregado un nuevo skater con éxito.', 
+                        'success'
+                    ).then(() => {
+                        location.reload()
+                    })
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error al registrar un nuevo skater',
+                        'Por favor vuelva a intentarlo',
+                        'error'
+                    )
+                    console.log(error);
+                })
+        }
+    });
+
+</script>
+

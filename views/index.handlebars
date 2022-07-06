@@ -1,0 +1,45 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+    <h2>Lista de participantes</h2>
+
+    <hr />
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Años de experiencia</th>
+                <th scope="col">Especialidad</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{!-- imprimir la lista de skaters utilizando un each. Se abre con numeral # y se cierra con slash / --}}
+            {{!-- usuarios es el objeto al que se le pasa la respuesta dentro del endpoint app.get en la ruta raiz.  --}}
+            {{#each usuarios }}
+                <tr>
+                    {{!-- utilizando this, traigo las respuestas de la consulta sql en el orden que necesite imprimirlos. --}}
+                    <th scope="row">{{this.id}}</th>
+                    {{!-- <td><div></div></td> --}}
+                    <td><div><img class='img' id="fotoSkater" src="assets/img/{{this.foto}}"></div></td>
+                    <td>{{this.nombre}}</td>
+                    <td>{{this.anos_experiencia}}</td>
+                    <td>{{this.especialidad}}</td>
+                    
+                    {{!-- se crea una validacion para obtener el estado del skater. --}}
+                    {{!-- la respuesta es un boolean, si es true la respuesta sera aprobado, si es false la respuesta sera en revision --}}
+                    {{#if this.estado}}
+                        <td class="text-success font-weight-bold">Aprobado</td>
+                    {{else}}
+                        <td class="text-warning font-weight-bold">En revisión</td>
+                    {{/if}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <a href="/login">Iniciar Sesión</a> |
+    <a href="/registro">Registrarme</a>
+</div>

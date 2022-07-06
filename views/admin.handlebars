@@ -1,0 +1,80 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+    {{!-- Si existe una sesion creada, utilizando un if se puede crear un texto de bienvenida para el usuario usando su email. --}}
+    {{!-- 
+    {{#if session.email}}
+        <h3>Bievenido {{session.email}}</h3>
+    {{/if}} 
+    --}}
+    
+    <h2 class="mt-3">Administración</h2>
+    <hr class="w-50" />
+
+    <table class="table w-50 m-auto">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Años de experiencia</th>
+                <th scope="col">Especialidad</th>
+                <th scope="col">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each usuarios }}
+                <tr>
+                    {{!-- utilizando this, se traen las respuestas desde la consulta sql en el orden que necesite imprimir. --}}
+                    <th scope="row">{{this.id}}</th>
+                    <td><div><img class='img' id="fotoSkater" src="assets/img/{{this.foto}}"></div></td>
+                    <td>{{this.nombre}}</td>
+                    <td>{{this.anos_experiencia}}</td>
+                    <td>{{this.especialidad}}</td>
+                    {{!-- utilizando un if se puede crear una sentencia para determinar el estado del usuario, sabiendo que las 
+                    opciones pueden ser true o false. Con el evento onclick, se crea una funcion con la que se le dara uso al 
+                    boton de seleccion. --}}
+                    <td>
+                        <input type="checkbox"
+                        {{#if this.estado}}
+                        checked
+                        {{/if}} 
+                        onclick='cambiarEstado({{this.id}}, this)'>
+                    </td>
+                    
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /* función que tendra como parametros, el id del usuario y elemento que es el check si esta activo o no. */
+    const cambiarEstado = (id, elemento) => {
+        const estado = elemento.checked;
+
+        try {
+            axios.put('/admin', {estado, id});
+            if (estado == true) {
+                Swal.fire(
+                    'Cambio realizado',
+                    'El usuario tiene un estado de Aprobado.',
+                    'success'
+                );
+            } else {
+                Swal.fire(
+                    'Cambio realizado',
+                    'El usuario tiene un estado de En revisión.',
+                    'success'
+                );
+            }
+        } catch (error) {
+            Swal.fire(
+                'Error',
+                'Se produjo un error y no es posible cambiar el estado.',
+                'error'
+            );
+            console.log(error);
+        }
+    }
+</script>

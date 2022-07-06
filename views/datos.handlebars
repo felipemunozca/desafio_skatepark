@@ -1,0 +1,129 @@
+<h1>Skate Park</h1>
+
+<div class="py-4">
+    <h2>Datos del perfil</h2>
+    <hr class="w-50" />
+
+    <form id="form_datos">
+        <div class="form-group row w-50 m-auto">
+            <div class="form-group col-12 col-sm-6">
+                <label>Email</label>
+                <input class="form-control m-auto" disabled value="{{skater.email}}" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Nombre</label>
+                <input class="form-control m-auto" value="{{skater.nombre}}" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Password</label>
+                <input type="password" class="form-control m-auto" value="{{skater.password}}" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Repita la password</label>
+                <input type="password" class="form-control m-auto" value="{{skater.password}}" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Años de experiencia</label>
+                <input class="form-control m-auto" value="{{skater.anos_experiencia}}" />
+            </div>
+            <div class="form-group col-12 col-sm-6">
+                <label>Especialidad</label>
+                <input class="form-control m-auto" value="{{skater.especialidad}}" />
+            </div>
+            {{!-- agrego un div oculto para cargar el nombre de la imagen y poder enviarla en el metodo eliminar. --}}
+            <div class="form-group col-12 col-sm-6 d-none">
+                <input class="form-control m-auto" value="{{skater.foto}}" />
+            </div>
+        </div>
+        <div class="mb-1">
+            <button class="btn btn-primary" id="btnActualizar">Actualizar</button>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-danger" id="btnEliminar">Eliminar cuenta</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    
+    /* Se crea una constante para rescatar el id del usuario y poder utilizarlo en las consultas. */
+    const id = `{{skater.id}}`;
+    
+    const btnActualizar = document.getElementById("btnActualizar");
+    const btnEliminar = document.getElementById("btnEliminar");
+
+    btnActualizar.addEventListener("click", (e) => { 
+        e.preventDefault();
+        /*  */
+        let [email, nombre, password, pass2, anos_experiencia, especialidad] = document.querySelectorAll("input");
+        
+        nombre = nombre.value
+        password = password.value
+        pass2 = pass2.value
+        anos_experiencia = anos_experiencia.value
+        especialidad = especialidad.value
+        
+        const payload = {
+            id,
+            nombre,
+            password,
+            anos_experiencia,
+            especialidad
+        }
+
+        console.log(payload);
+
+        if (password != pass2) {
+            Swal.fire(
+                'Las contraseñas deben ser iguales',
+                'Por favor vuelva a escribirlas',
+                'error'
+            )
+        } else {
+            axios.put("/registro", payload)
+                .then((respuesta) => {
+                    Swal.fire(
+                        'Registro actualizado', 
+                        'Se ha actualizado la información del skater.',  
+                        'success'
+                    ).then(() => {
+                        window.location.href = "/"
+                    })
+                })
+                .catch(error => {
+                    Swal.fire(
+                        'Error al actualizar', 
+                        'Por favor vuelva a intentarlo', 
+                        'error'
+                    )
+                    console.log(error);
+                })
+        }
+
+    });
+
+    btnEliminar.addEventListener("click", (e) => { 
+        e.preventDefault();
+
+        axios.delete(`/registro/${id}`)
+            .then((respuesta) => {
+                Swal.fire(
+                    'Registro eliminado', 
+                    'Se ha eliminado la información del skater.',  
+                    'success'
+                ).then(() => {
+                    window.location.href = "/"
+                })
+            })
+            .catch(error => {
+                Swal.fire(
+                    'Error al eliminar', 
+                    'Por favor vuelva a intentarlo', 
+                    'error'
+                )
+                console.log(error);
+            })
+
+    });
+    
+</script>
