@@ -1,0 +1,28 @@
+Feedback Prueba - Skate Park
+
+Buen trabajo, hay algunos detalles eso si: 
+- Falto ocultar y mostrar links dependiento si el usuario estaba con su sesión iniciada o no.
+- Por otra parte la ruta para administrar y cambiar el estado de los skaters sólo debe poder ser accedida mediante envío de JWT.
+- El acceso a datos (perfil) debería ser accedido mediante un link y no tan sólo mediante una redirección después del respectivo 
+login, de lo contrario tendrías que estar haciendo login por cada cambio que necesites.
+- Sólo los usuarios aprobados o administradores deberían tener los permisos para cambiar el estado (para eso la ruta put de /admin 
+debe ser con JWT.
+
+Requerimientos
+
+1. Crear una API REST con el Framework Express (3 Puntos)
+
+    Puntaje obtenido: 3
+
+2. Servir contenido dinámico con express-handlebars (3 Puntos)
+
+    Puntaje obtenido: 2
+    Falta terminar funcionalidades, vistas, etc.
+
+3. Ofrecer la funcionalidad Upload File con express-fileupload (2 Puntos)
+
+    Puntaje obtenido: 2
+
+4. Implementar seguridad y restricción de recursos o contenido con JWT (2 Puntos)
+
+    Puntaje obtenido: 1
